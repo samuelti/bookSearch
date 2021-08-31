@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-
+import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+import {SAVE_BOOK} from '../utils/mutations'
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -14,6 +14,8 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
+
+  const [saveBook] = useMutation(SAVE_BOOK)
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -27,7 +29,7 @@ const SearchBooks = () => {
     if (!searchInput) {
       return false;
     }
-
+//fetch to the google api that is doing the search https://www.googleapis.com/books/v1/volumes?q= searchinput fgoes here
     try {
       const response = await searchGoogleBooks(searchInput);
 
@@ -65,6 +67,8 @@ const SearchBooks = () => {
     }
 
     try {
+
+      //change variables that are passed into saveBook and pass an object that send all the bookdata into it. 
       const response = await saveBook(bookToSave, token);
 
       if (!response.ok) {
