@@ -17,6 +17,7 @@ const resolvers = {
   
   Mutation: {
       addUser: async (a, b)=>{
+          console.log('addUser called')
           const user = await User.create(b)
           const token = signToken(user)
           return {token, user}

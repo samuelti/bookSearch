@@ -6,22 +6,30 @@ import Navbar from './components/Navbar';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 
-const httpLink = createHttpLink({uri:'/graphql'});
+// const httpLink = createHttpLink({uri:'http://localhost:3001/graphql'});
 
-const link = setContext((_, {headers})=>{
-  const token = localStorage.getItem('id_token');
-  return{
-    headers: {
-      ...headers, 
-      authorization: token ? `Bearer ${token}`: '',
-    }
-  }
-})
+// const link = setContext((_, {headers})=>{
+//   const token = localStorage.getItem('id_token');
+//   return{
+//     headers: {
+//       ...headers, 
+//       authorization: token ? `Bearer ${token}`: '',
+//     }
+//   }
+// })
+
+// const client = new ApolloClient({
+//   link: link.concat(httpLink),
+//   cache: new InMemoryCache(),
+// })
 
 const client = new ApolloClient({
-  link: link.concat(httpLink),
-  cache: new InMemoryCache(),
-})
+
+  uri: 'http://localhost:3001/graphql',
+
+  cache: new InMemoryCache()
+
+});
 
 function App() {
   return (

@@ -2,6 +2,8 @@ const express = require("express");
 const {ApolloServer} = require('apollo-server-express')
 const path = require("path");
 const db = require("./config/connection");
+const cors = require('cors');
+
 
 const { typeDefs, resolvers} = require('./gql')
 const {authMiddleware} = require('./utils/auth');
@@ -13,14 +15,17 @@ const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
+ // context: authMiddleware
 })
 
-server.applyMiddleware({app})
+server.start().then(()=>{
+  server.applyMiddleware({app})
 
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+app.use(cors());
+
 
 
 // if we're in production, serve client/build as static assets
@@ -42,6 +47,9 @@ app.get('*', (req, res)=>{
       console.log(`🌍 Now listening on localhost:${PORT}`)
     );
   });
+});
+
+
 
 
 // const express = require('express');
