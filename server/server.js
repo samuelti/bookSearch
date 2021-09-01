@@ -5,7 +5,7 @@ const db = require("./config/connection");
 const cors = require('cors');
 
 
-const { typeDefs, resolvers} = require('./gql')
+const { typeDefs, resolvers} = require('./gql');
 const {authMiddleware} = require('./utils/auth');
 
 

@@ -33,13 +33,15 @@ const [addUser, { error }] =useMutation(ADD_USER);
     }
     
     try {
-      const { data } = addUser({
+      const { data } = await addUser({
         variables: { ...userFormData },
       });
+      Auth.login(data.addUser.token);
       console.log('add user completed');
       window.location.reload();
     } catch (err) {
       console.error(err);
+      setShowAlert(true);
     }
 
     setUserFormData({
