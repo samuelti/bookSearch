@@ -38,11 +38,11 @@ const resolvers = {
         },
         saveBook: async (a, { bookData }, c)=>{
             if(c.user){
-                return await User.findByIdAndUpdate({_id: c.user._id}, {$pull: {savedBooks: bookData}}, {new: true})
+                return await User.findByIdAndUpdate({_id: c.user._id}, {$push: {savedBooks: bookData}}, {new: true})
             };
             throw new AuthenticationError('Incorrect Password!')
         },
-        removeBook: async  (a, { bookData }, c)=>{
+        removeBook: async  (a, { bookId }, c)=>{
             if(c.user){
                 return await User.findOneAndUpdate({_id: c.user._id}, {$pull: {savedBooks: bookId}}, {new: true})
             };
