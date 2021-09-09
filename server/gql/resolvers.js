@@ -44,7 +44,7 @@ const resolvers = {
         },
         removeBook: async  (a, { bookId }, c)=>{
             if(c.user){
-                return await User.findOneAndUpdate({_id: c.user._id}, {$pull: {savedBooks: bookId}}, {new: true})
+                return await User.findOneAndUpdate({_id: c.user._id}, {$pull: {savedBooks: {bookId}}}, {new: true})
             };
             throw new AuthenticationError('Incorrect Password!')
         }
